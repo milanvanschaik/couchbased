@@ -6,7 +6,8 @@ Simply use NPM:
 `npm install couchbased`
 
 ## Usage
-Create a model
+### Create a model
+When a field is indexed, Couchbased will automatically create a Couchbase view for you when running .createViews().
 ```javascript
 var User = couchbased.createModel('User', {
   name: String,
@@ -14,9 +15,18 @@ var User = couchbased.createModel('User', {
 }, bucket);
 ```
 
-Automatically create the views
+### Automatically create the views
 ```javascript
 User.createViews();
+```
+
+### Get doc by id
+```javascript
+User.byId(id, function(error, result) {
+  
+  console.log(result);
+  
+});
 ```
 
 ## Thanks to
