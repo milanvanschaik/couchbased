@@ -1,0 +1,27 @@
+{
+  "name": "couchbased",
+  "version": "0.1.0",
+  "description": "Advanced ODM for Couchbase",
+  "main": "couchbased.js",
+  "dependencies": {
+    "node-uuid": "1.4.1"
+  },
+  "devDependencies": {
+    "mocha": "~1.13.0",
+    "chai": "~1.8.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/milanvanschaik/couchbased.git"
+  },
+  "bugs": {
+    "url": "https://github.com/milanvanschaik/couchbased/issues"
+  },
+  "keywords": [
+    "couchbase",
+    "couchbased",
+    "odm"
+  ],
+  "author": "Milan van Schaik",
+  "license": "BSD"
+}
