@@ -1,10 +1,11 @@
 {
   "name": "couchbased",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Advanced ODM for Couchbase",
   "main": "couchbased.js",
   "dependencies": {
-    "node-uuid": "1.4.1"
+    "node-uuid": "1.4.1",
+    "couchbase": "1.2.1"
   },
   "devDependencies": {
     "mocha": "~1.13.0",
