@@ -3,7 +3,7 @@ Advanced ODM for Couchbase
 
 ## Installation
 Simply use NPM:
-npm install chouchbased
+npm install couchbased
 
 ## Usage
 
