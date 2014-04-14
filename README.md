@@ -2,9 +2,11 @@
 Advanced ODM for Couchbase
 
 ## Installation
+Simply use NPM:
+npm install chouchbased
 
 ## Usage
 
 ## Thanks to
-Jesse van der Sar
+This module is inspired on the couchbase-odm module from Jesse van der Sar.
 https://github.com/jessesar/couchbase-odm
