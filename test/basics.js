@@ -1,6 +1,6 @@
 // Require chai.js expect module for assertions
 var expect = require('chai').expect,
-    couchbased = require('couchbased'),
+    couchbased = require('../couchbased'),
     mock = require('./mock/couch');
 
 describe('Basics', function() {
@@ -96,11 +96,13 @@ describe('Basics', function() {
     test.name = 'John';
 
     test.save(function(error) {
+      
       expect(error).to.be.null;
 
       myModel.byId(test._id, function(error, result) {
 
         expect(error).to.be.null;
+
         expect(result.name).to.be.a('string');
         expect(result.name).to.equal('John');
 
@@ -109,6 +111,79 @@ describe('Basics', function() {
       });
 
     })
+
+  });
+
+  it('should be able to get a doc by a generated view', function(done) {
+
+    var modelName = mock.uniqueId('model');
+
+    var myModel = couchbased.createModel(modelName, { 'name': { type: String, index: true } }, mock.bucket);
+    myModel.createViews();
+
+    var test = new myModel();
+    test.name = 'John';
+
+    test.save(function(error) {
+
+      expect(error).to.be.null;
+
+      myModel.byName(test.name, { limit: 1 }, function(error, result) {
+
+        expect(error).to.be.null;
+
+        expect(result.name).to.be.a('string');
+        expect(result.name).to.equal('John');
+
+        done();
+
+      });
+
+    });
+
+  });
+
+  it('should be able to get multiple docs by a generated view', function(done) {
+
+    var modelName = mock.uniqueId('model');
+
+    var myModel = couchbased.createModel(modelName, { 'name': { type: String, index: true } }, mock.bucket);
+    myModel.createViews();
+
+    var test = new myModel();
+    test.name = 'John';
+
+    test.save(function(error) {
+
+      expect(error).to.be.null;
+
+      var secondTest = new myModel();
+      secondTest.name = 'John';
+
+      secondTest.save(function(error) {
+
+        expect(error).to.be.null;
+
+        myModel.byName([test.name], function(error, result) {
+
+          expect(error).to.be.null;
+          
+          result.forEach(function(result) {
+
+            expect(result.name).to.be.a('string');
+            expect(result.name).to.equal('John');
+
+          });
+
+          expect(result.length).to.be.equal(2);
+
+          done();
+
+        });
+
+      });
+
+    });
 
   });
 

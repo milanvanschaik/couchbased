@@ -57,36 +57,57 @@ module.exports.createModel = function(name, fields, connection, callback) {
 
   model.createFunctionForView = function(viewName, functionName) {
 
-    model[functionName] = function(query, callback) {
+    model[functionName] = function(keys, query, callback) {
 
       var view = connection.view(name, viewName);
 
+      // Check if 2nd param is really a query object, otherwise it's the callback
+      if(typeof(query) == 'object')
+      {
+
+        var q = query;
+
+      }
+
+      else {
+
+        var q = {};
+        var callback = query;
+
+      }
+
       // Set keys as key when only one key is given in keys,
       // then we don't get an error from Couchbase.
-      if(typeof(query.keys) != 'Array' && query.keys) {
+      if(typeof(keys) != 'object' && keys) {
 
-        query.key = query.keys;
-        delete query.keys;
+        q.key = keys;
+
+      }
+
+      // And otherwise basicly set is as keys
+      else {
+        
+        q.keys = keys;
 
       }
 
       var return_only_value = true;
 
-      if(query.return_only_value != undefined && query.return_only_value === false) {
+      if(q.return_only_value != undefined && q.return_only_value === false) {
 
         return_only_value = false;
 
       }
 
-      view.query(query, function(error, results) {
-        
+      view.query(q, function(error, results) { 
+
         if(results[0] && results[0].value._id) {
 
           // Create couchbased object from each result
           results = results.map(model.unserialize);
 
           // Only return the concerning object when limit is set to one
-          if(query.limit && query.limit == 1) {
+          if(q.limit && q.limit == 1) {
 
             callback(error, results[0]);
 
@@ -176,7 +197,7 @@ module.exports.createModel = function(name, fields, connection, callback) {
 
   model.createViews = function(callback) {
     
-    // Get already already existing views and import them
+    // Get already existing views and import them
     connection.getDesignDoc(name, function(error, doc) {
 
       var views = {};
