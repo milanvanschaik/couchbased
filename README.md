@@ -40,7 +40,7 @@ User.byUsername('john', function(error, result) {
 ```
 
 ### Query
-In the query you can give all of couchbased default options, but Couchbased give you one more. Let's say you want a count of total users byUsername with a reduce. Then you probably only want the count. That's possible with return_only_value: true in the query.
+In the query you can give all of Couchbase default options, but Couchbased give you one more. Let's say you want a count of total users byUsername with a reduce. Then you probably only want the count. That's possible with return_only_value: true in the query.
 
 ## Thanks to
 This module is inspired on the couchbase-odm module from Jesse van der Sar.
